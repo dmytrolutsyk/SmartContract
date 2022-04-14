@@ -1,16 +1,22 @@
-pragma solidity >=0.4.22 <0.9.0;
+//pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.4.23;
 
-import "./ownable.sol";
+//import "./ownable.sol";
 
-contract RealEstateFactory is Ownable {
+contract RealEstateFactory {
 
-    event NewRealEstate(string name, string adress, uint realEstateId, uint surface, uint price);
+    event NewRealEstate(string typeEstate, string adress, string description, string docHash, uint realEstateId, uint surface, uint price, address vendorAdress, uint pieceNumber, uint date);
 
     struct RealEstate {
-      string name;
+      string typeEstate;
       string adress;
+      string description;
+      string docHash;
       uint surface;
       uint price;
+      address vendorAdress;
+      uint pieceNumber;
+      uint date;
     }
 
     RealEstate[] public realEstates;
@@ -18,11 +24,11 @@ contract RealEstateFactory is Ownable {
     mapping (uint => address) public realEstateToOwner;
     mapping (address => uint) ownerRealEstateCount;
 
-    function _createRealEstate(string _name, string _adress, uint _surface, uint _price) internal {
-        uint id = realEstates.push(RealEstate(_name, _adress, _surface, _price)) - 1;
+    function _createRealEstate(string _typeEstate, string _adress, string _description, string _docHash, uint _realEstateId, uint _surface, uint _price, address _vendorAdress, uint _pieceNumber, uint _date) internal {
+        uint id = realEstates.push(RealEstate(_typeEstate, _adress, _description, _docHash, _surface, _price, _vendorAdress, _pieceNumber, _date)) - 1;
         realEstateToOwner[id] = msg.sender;
         ownerRealEstateCount[msg.sender]++;
-        NewRealEstate(_name, _adress, id, _surface, _price);
+        emit NewRealEstate(_typeEstate, _adress, _description, _docHash, _realEstateId, _surface, _price, _vendorAdress, _pieceNumber, _date);
     }
 
 }

@@ -1,24 +1,23 @@
-pragma solidity >=0.4.22 <0.9.0;
+//pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.4.23;
 
-import "./RealEstateTrading.sol";
+//import "./RealEstateTrading.sol";
+import "./RealEstateFactory.sol";
+contract RealEstateHelper is RealEstateFactory {
 
-contract RealEstateHelper is RealEstateTrading {
-
-
-
-  function changeName(uint _realEstateId, string _newName) external {
-    require(msg.sender == realEstateToOwner[_realEstateId]);
-    realEstates[_realEstateId].name = _newName;
+  function changeName(uint _realEstateId, string _newTypeEstate) external {
+    require(msg.sender == RealEstateFactory.realEstateToOwner[_realEstateId]);
+    RealEstateFactory.realEstates[_realEstateId].typeEstate = _newTypeEstate;
   }
 
   function changePrice(uint _realEstateId, uint _price) external {
-    require(msg.sender == realEstateToOwner[_realEstateId]);
-    realEstates[_realEstateId].price = _price;
+    require(msg.sender == RealEstateFactory.realEstateToOwner[_realEstateId]);
+    RealEstateFactory.realEstates[_realEstateId].price = _price;
   }
 
   function changeSurface(uint _realEstateId, uint _surface) external {
-    require(msg.sender == realEstateToOwner[_realEstateId]);
-    realEstates[_realEstateId].surface = _surface;
+    require(msg.sender == RealEstateFactory.realEstateToOwner[_realEstateId]);
+    RealEstateFactory.realEstates[_realEstateId].surface = _surface;
   }
 
   function getRealEstatesByOwner(address _owner) external view returns(uint[]) {
