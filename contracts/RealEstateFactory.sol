@@ -26,7 +26,7 @@ contract RealEstateFactory {
     mapping (uint => address) public realEstateToOwner;
     mapping (address => uint) ownerRealEstateCount;
 
-    function _createRealEstate(string _typeEstate, string _adress, string _description, string _docHash, uint _realEstateId, uint _surface, uint _price, address _vendorAdress, uint _pieceNumber, uint _date) internal {
+    function createRealEstate(string _typeEstate, string _adress, string _description, string _docHash, uint _realEstateId, uint _surface, uint _price, address _vendorAdress, uint _pieceNumber, uint _date) external {
         uint id = realEstates.push(RealEstate(_typeEstate, _adress, _description, _docHash, _surface, _price, _vendorAdress, _pieceNumber, _date)) - 1;
         realEstateToOwner[id] = msg.sender;
         ownerRealEstateCount[msg.sender]++;
