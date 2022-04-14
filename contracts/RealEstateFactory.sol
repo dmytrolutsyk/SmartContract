@@ -6,6 +6,8 @@ pragma solidity ^0.4.23;
 contract RealEstateFactory {
 
     event NewRealEstate(string typeEstate, string adress, string description, string docHash, uint realEstateId, uint surface, uint price, address vendorAdress, uint pieceNumber, uint date);
+    event SellRealEstate(string typeEstate, string adress, string description, string docHash, uint realEstateId, uint surface, uint price, address vendorAdress, uint pieceNumber, uint date);
+
 
     struct RealEstate {
       string typeEstate;
@@ -29,6 +31,17 @@ contract RealEstateFactory {
         realEstateToOwner[id] = msg.sender;
         ownerRealEstateCount[msg.sender]++;
         emit NewRealEstate(_typeEstate, _adress, _description, _docHash, _realEstateId, _surface, _price, _vendorAdress, _pieceNumber, _date);
+    }
+
+    function buyRealEstate(uint realEstateId) external {
+      RealEstate storage estateToSell = realEstates[realEstateId];
+      address oldOwner = realEstateToOwner[realEstateId];
+      estateToSell.vendorAdress = oldOwner;
+
+      require(oldOwner != msg.sender);
+      realEstateToOwner[realEstateId] = msg.sender;
+      ownerRealEstateCount[msg.sender]++;
+      ownerRealEstateCount[oldOwner]--;
     }
 
 }
