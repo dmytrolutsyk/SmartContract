@@ -17,5 +17,12 @@ describe("RealEstateFactory", function () {
     const res = await RealEstateProvider.functions.realEstates(0);
     console.log(res.typeEstate);
     expect(res.typeEstate).to.equal("House");
+
+    //await RealEstateProvider.functions.buyRealEstate(0);
+    //console.log("deuxieme test");
+    //const res2 = await RealEstateProvider.functions.realEstates(0);
+    //console.log(res2);
+    //expect(res2).to.equal(none);
+
   });
 });

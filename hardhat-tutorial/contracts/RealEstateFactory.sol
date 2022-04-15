@@ -38,7 +38,6 @@ contract RealEstateFactory {
       RealEstate storage estateToSell = realEstates[realEstateId];
       address oldOwner = realEstateToOwner[realEstateId];
       estateToSell.vendorAdress = oldOwner;
-
       require(oldOwner != msg.sender);
       realEstateToOwner[realEstateId] = msg.sender;
       ownerRealEstateCount[msg.sender]++;
