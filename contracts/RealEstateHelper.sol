@@ -5,7 +5,7 @@ pragma solidity ^0.4.23;
 import "./RealEstateFactory.sol";
 contract RealEstateHelper is RealEstateFactory {
 
-  function changeName(uint _realEstateId, string _newTypeEstate) external {
+  function changeType(uint _realEstateId, string _newTypeEstate) external {
     require(msg.sender == RealEstateFactory.realEstateToOwner[_realEstateId]);
     RealEstateFactory.realEstates[_realEstateId].typeEstate = _newTypeEstate;
   }

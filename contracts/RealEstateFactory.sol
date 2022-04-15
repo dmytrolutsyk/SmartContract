@@ -5,19 +5,18 @@ pragma solidity ^0.4.23;
 
 contract RealEstateFactory {
 
-    event NewRealEstate(string typeEstate, string adress, string description, string docHash, uint realEstateId, uint surface, uint price, address vendorAdress, uint pieceNumber, uint date);
-    event SellRealEstate(string typeEstate, string adress, string description, string docHash, uint realEstateId, uint surface, uint price, address vendorAdress, uint pieceNumber, uint date);
+    event NewRealEstate(string typeEstate, string adress, string description, uint realEstateId, uint surface, uint price, address vendorAdress, uint date);
+    event SellRealEstate(string typeEstate, string adress, string description, uint realEstateId, uint surface, uint price, address vendorAdress, uint date);
 
 
     struct RealEstate {
       string typeEstate;
       string adress;
       string description;
-      string docHash;
+      uint realEstateId;
       uint surface;
       uint price;
       address vendorAdress;
-      uint pieceNumber;
       uint date;
     }
 
@@ -26,11 +25,12 @@ contract RealEstateFactory {
     mapping (uint => address) public realEstateToOwner;
     mapping (address => uint) ownerRealEstateCount;
 
-    function createRealEstate(string _typeEstate, string _adress, string _description, string _docHash, uint _realEstateId, uint _surface, uint _price, address _vendorAdress, uint _pieceNumber, uint _date) external {
-        uint id = realEstates.push(RealEstate(_typeEstate, _adress, _description, _docHash, _surface, _price, _vendorAdress, _pieceNumber, _date)) - 1;
+    function createRealEstate(string typeEstate, string adress, string description, uint realEstateId, uint surface, uint price, address vendorAdress, uint date) external /*returns (RealEstate)*/{
+        uint id = realEstates.push(RealEstate(typeEstate, adress, description, realEstateId, surface, price, vendorAdress, date)) - 1;
         realEstateToOwner[id] = msg.sender;
         ownerRealEstateCount[msg.sender]++;
-        emit NewRealEstate(_typeEstate, _adress, _description, _docHash, _realEstateId, _surface, _price, _vendorAdress, _pieceNumber, _date);
+        emit NewRealEstate(typeEstate, adress, description, realEstateId, surface, price, vendorAdress, date);
+        //return realEstates[id];
     }
 
     function buyRealEstate(uint realEstateId) external {
