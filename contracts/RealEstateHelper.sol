@@ -1,11 +1,11 @@
-//pragma solidity >=0.4.22 <0.9.0;
-pragma solidity ^0.4.23;
+pragma solidity >=0.4.22 <0.9.0;
+//pragma solidity ^0.4.23;
 
 //import "./RealEstateTrading.sol";
 import "./RealEstateFactory.sol";
 contract RealEstateHelper is RealEstateFactory {
 
-  function changeType(uint _realEstateId, string _newTypeEstate) external {
+  function changeType(uint _realEstateId, string calldata _newTypeEstate) external {
     require(msg.sender == RealEstateFactory.realEstateToOwner[_realEstateId]);
     RealEstateFactory.realEstates[_realEstateId].typeEstate = _newTypeEstate;
   }
@@ -20,7 +20,7 @@ contract RealEstateHelper is RealEstateFactory {
     RealEstateFactory.realEstates[_realEstateId].surface = _surface;
   }
 
-  function getRealEstatesByOwner(address _owner) external view returns(uint[]) {
+  function getRealEstatesByOwner(address _owner) external view returns(uint[] memory) {
     uint[] memory result = new uint[](ownerRealEstateCount[_owner]);
     uint counter = 0;
     for (uint i = 0; i < realEstates.length; i++) {
