@@ -26,12 +26,12 @@ contract RealEstateFactory {
     mapping (uint => address) public realEstateToOwner;
     mapping (address => uint) ownerRealEstateCount;
 
-    function createRealEstate(string calldata typeEstate, string calldata adress, string calldata description, uint realEstateId, uint surface, uint price, address vendorAdress, uint date) external returns (RealEstate memory){
-        realEstates.push(RealEstate(typeEstate, adress, description, realEstateId, surface, price, vendorAdress, date));
+    function createRealEstate(string calldata typeEstate, string calldata adress, string calldata description, uint realEstateId, uint surface, uint price, uint date) external returns (RealEstate memory){
+        realEstates.push(RealEstate(typeEstate, adress, description, realEstateId, surface, price, msg.sender, date));
         uint id = realEstates.length - 1;
         realEstateToOwner[id] = msg.sender;
         ownerRealEstateCount[msg.sender]++;
-        emit NewRealEstate(typeEstate, adress, description, realEstateId, surface, price, vendorAdress, date);
+        emit NewRealEstate(typeEstate, adress, description, realEstateId, surface, price, msg.sender, date);
         return realEstates[id];
     }
 
